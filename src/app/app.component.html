@@ -1,26 +1,40 @@
 <div id="pageWrapper">
-  <div class="search">
-    <input class="search__input"[placeholder]="'Search artist or title...'" [(ngModel)]="searchedText" (ngModelChange)="seached()">
+  <div *ngIf="!isErrorCase">
+    <div class="search">
+      <input id="searchInput" class="search__input" [placeholder]="'Search artist or title...'" [(ngModel)]="searchedText" autofocus
+             (ngModelChange)="seached()">
+    </div>
+    <div class="filter">
+      <div class="filter__genre">
+        <mat-form-field appearance="fill" class="filter__input">
+          <mat-label>Genres</mat-label>
+          <mat-select [formControl]="genres" [(ngModel)]="selectedGenres" (openedChange)="changed($event)" multiple>
+            <mat-option *ngFor="let genre of genreList" [value]="genre">{{genre.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="filter__year">
+        <mat-form-field appearance="fill" class="filter__input">
+          <mat-label>Years</mat-label>
+          <mat-select [formControl]="genres" [(ngModel)]="selectedYears" (openedChange)="changed($event)" multiple>
+            <mat-option *ngFor="let year of yearList" [value]="year">{{year}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="list">
+      <div class="list__item" *ngFor="let oneVideo of current_data">
+        <img class="list__img" [src]="oneVideo.image_url">
+        <div class="list__artist">{{oneVideo.artist}}</div>
+        <div class="list__title">{{oneVideo.title}}</div>
+      </div>
+      <div *ngIf="current_data.length == 0" class="list__no-result">
+        There is no result.
+      </div>
+    </div>
   </div>
-  <div class="filter">
-    <div>
-      <mat-form-field appearance="fill">
-        <mat-label>Genres</mat-label>
-        <mat-select [formControl]="genres" [(ngModel)]="selectedGenres" (openedChange)="test($event)" multiple>
-          <mat-option *ngFor="let genre of genreList" [value]="genre">{{genre.name}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div>
-
-    </div>
-  </div>
-  <div class="list">
-    <div class="list__item" *ngFor="let oneVideo of current_data">
-      <img class="list__img" [src]="oneVideo.image_url">
-      <div class="list__artist">{{oneVideo.artist}}</div>
-      <div class="list__title">{{oneVideo.title}}</div>
-    </div>
+  <div *ngIf="isErrorCase" class="page--error">
+    An error occurred.
   </div>
 </div>
 <!--<router-outlet></router-outlet>-->

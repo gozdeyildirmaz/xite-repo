@@ -10,7 +10,7 @@ export class XiteService {
 
   getDataset() {
 
-    const url =  'http://raw.githubusercontent.com/XiteTV/frontend-coding-exercise/main/data/dataset.json';
+    const url =  'https://raw.githubusercontent.com/XiteTV/frontend-coding-exercise/main/data/dataset.json';
 
     const headers = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'});
     const options = {
